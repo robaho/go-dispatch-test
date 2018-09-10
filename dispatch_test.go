@@ -1,0 +1,62 @@
+package main_test
+
+import (
+	"testing"
+)
+
+type I interface {
+	GetValue() int
+}
+
+type A struct {
+	x int
+}
+
+// pointer dispatch is 3x slower
+//func (a *A) GetValue() int {
+//	return a.x
+//}
+func (a A) GetValue() int {
+	return a.x
+}
+
+type B struct {
+	y int
+}
+
+// pointer dispatch is 3x slower
+//func (b *B) GetValue() int {
+//	return b.y
+//}
+
+func (b B) GetValue() int {
+	return b.y
+}
+
+var gsum int
+
+func BenchmarkIDispatch(b *testing.B) {
+	var ifs = [2]I{&A{1}, &B{2}}
+	var sum int
+
+	for i := 0; i < b.N; i++ {
+		sum += ifs[i%2].GetValue()
+	}
+
+	if sum > 0 {
+		gsum = sum
+	}
+}
+
+func BenchmarkDispatch(b *testing.B) {
+	var ifs = [2]A{A{1}, A{2}}
+	var sum int
+
+	for i := 0; i < b.N; i++ {
+		sum += ifs[i%2].GetValue()
+	}
+
+	if sum > 0 {
+		gsum = sum
+	}
+}
