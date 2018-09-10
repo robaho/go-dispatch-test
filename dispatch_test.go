@@ -60,3 +60,28 @@ func BenchmarkDispatch(b *testing.B) {
 		gsum = sum
 	}
 }
+
+var bytes [16 * 1024]byte
+
+func BenchmarkArrayParms(b *testing.B) {
+	var slice = bytes[:]
+
+	var sum int
+
+	for i := 0; i < b.N; i++ {
+		sum += calculateChecksum(slice)
+	}
+
+	if sum > 0 {
+		gsum = sum
+	}
+}
+
+func calculateChecksum(slice []byte) int {
+	var sum int
+	for i, b := range slice {
+		sum = sum ^ int(b)
+		slice[i] = byte(sum) // modify slice so to avoid loop removal
+	}
+	return sum
+}

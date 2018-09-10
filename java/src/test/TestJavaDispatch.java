@@ -67,5 +67,30 @@ public class TestJavaDispatch {
             gsum=sum;
         }
     }
+    static byte[] bytes = new byte[16*1024];
+
+    @Benchmark
+    @OperationsPerInvocation(1000)
+    public void TestArrayDispatch() {
+        byte[] bytes0 = bytes; // a reference in Java, like a slice
+
+        int sum=0;
+        for(int i=0;i<1000;i++) {
+            sum += calculateChecksum(bytes0);
+        }
+        if(sum>0){
+            gsum=sum;
+        }
+    }
+
+    static int calculateChecksum(byte[] bytes){
+        int sum=0;
+        for (int i=0;i<bytes.length;i++) {
+            sum = sum ^ (int)bytes[i];
+            bytes[i]=(byte)sum; // modify slice so to avoid loop removal
+        }
+        return sum;
+    }
+
 
 }

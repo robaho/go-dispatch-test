@@ -23,10 +23,10 @@ Go
 goos: darwin
 goarch: amd64
 pkg: github.com/robaho/go-dispatch-test
-BenchmarkIDispatch-8   	300000000	         5.75 ns/op
-BenchmarkDispatch-8    	2000000000	         1.59 ns/op
+BenchmarkIDispatch-8    	300000000	         5.56 ns/op
+BenchmarkDispatch-8     	2000000000	         1.57 ns/op
+BenchmarkArrayParms-8   	  200000	      9265 ns/op
 PASS
-
 ```
 
 Java
@@ -41,11 +41,12 @@ Java
 # Timeout: 10 min per iteration
 # Threads: 1 thread, will synchronize iterations
 # Benchmark mode: Average time, time/op
-# Benchmark: test.TestJavaDispatch.TestDispatch
 
 Benchmark                       Mode  Cnt  Score   Error  Units
-TestJavaDispatch.TestDispatch   avgt    3  0.500 ± 0.120  ns/op
-TestJavaDispatch.TestIDispatch  avgt    3  0.979 ± 0.097  ns/op
+TestJavaDispatch.TestArrayDispatch  avgt    3  5429.647 ± 1921.299  ns/op
+TestJavaDispatch.TestDispatch       avgt    3     0.521 ±    0.487  ns/op
+TestJavaDispatch.TestIDispatch      avgt    3     0.979 ±    0.194  ns/op
+
 ```
 
 **Notes**
