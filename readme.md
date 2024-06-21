@@ -10,55 +10,37 @@ The tests use 'gobench' for Go and 'jmh' for Java. The tests were rung using Int
 
 The tests were run using Go 1.11 and Java 1.8_181.
 
-The tests were run on identical hardware and OS, iMac OS 10.13.6, core i7 3.4 ghz (4 cores, 8 threads)
+The tests were run on identical hardware and OS, iMac OS 12.7.5, 4 GHz Quad-Core Intel Core i7
 
 Multiple runs were performed with very insignificant in the results.
 
 **Results**
 
-
-Go
-
+Go 1.22.4
 ```
 goos: darwin
 goarch: amd64
 pkg: github.com/robaho/go-dispatch-test
-BenchmarkIDispatch-8    	300000000	         5.56 ns/op
-BenchmarkDispatch-8     	2000000000	         1.57 ns/op
-BenchmarkArrayParms-8   	  200000	      9265 ns/op
+cpu: Intel(R) Core(TM) i7-6700K CPU @ 4.00GHz
+BenchmarkIDispatch-8      	535263746	         2.118 ns/op
+BenchmarkIDispatchPtr-8   	675721244	         1.773 ns/op
+BenchmarkDispatch-8       	1000000000	         0.6953 ns/op
+BenchmarkArrayParms-8     	  184212	      6440 ns/op
 PASS
-```
-
-Java
 
 ```
-# JMH version: 1.21
-# VM version: JDK 1.8.0_181, Java HotSpot(TM) 64-Bit Server VM, 25.181-b13
-# VM invoker: /Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/jre/bin/java
-# VM options: -Dfile.encoding=UTF-8
-# Warmup: 1 iterations, 10 s each
-# Measurement: 3 iterations, 1 s each
-# Timeout: 10 min per iteration
-# Threads: 1 thread, will synchronize iterations
-# Benchmark mode: Average time, time/op
 
-Benchmark                       Mode  Cnt  Score   Error  Units
-TestJavaDispatch.TestArrayDispatch  avgt    3  5429.647 ± 1921.299  ns/op
-TestJavaDispatch.TestDispatch       avgt    3     0.521 ±    0.487  ns/op
-TestJavaDispatch.TestIDispatch      avgt    3     0.979 ±    0.194  ns/op
+Java build 21+35-LTS-2513
+
+```
+Benchmark                           Mode  Cnt     Score       Error  Units
+TestJavaDispatch.TestArrayDispatch  avgt    3  4775.994 ± 13310.309  ns/op
+TestJavaDispatch.TestDispatch       avgt    3     0.941 ±     0.088  ns/op
+TestJavaDispatch.TestIDispatch      avgt    3     1.331 ±     0.146  ns/op
 
 ```
 
 **Notes**
 
-Interestingly, if the Go methods are declared with pointer receivers, the performance is almost 3x worse:
-
-```
-goos: darwin
-goarch: amd64
-pkg: github.com/robaho/go-dispatch-test
-BenchmarkIDispatch-8   	100000000	        12.6 ns/op
-BenchmarkDispatch-8    	2000000000	         1.57 ns/op
-PASS
-
-```
+Interestingly, if the Go methods are declared with pointer receivers, the performance improves - which is a change
+over previous Go versions where the performance was almost 3x worse.
