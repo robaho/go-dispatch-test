@@ -1,0 +1,25 @@
+apply plugin: 'java'
+
+sourceSets {
+    jmh {
+        java.srcDirs = ['java/src/jmh/']
+    }
+}
+
+dependencies {
+    jmhAnnotationProcessor 'org.openjdk.jmh:jmh-generator-annprocess:1.35'
+    jmhImplementation 'org.openjdk.jmh:jmh-core:1.35' 
+}
+
+task jmh(type: JavaExec, description: 'Executing JMH benchmarks') { 
+    classpath = sourceSets.jmh.runtimeClasspath 
+    main = 'org.openjdk.jmh.Main'
+    systemProperty "jmh.blackhole.autoDetect", "false"
+}
+
+repositories {
+    mavenCentral()
+}
+
+classes.finalizedBy(jmhClasses)
+
