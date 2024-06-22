@@ -33,11 +33,10 @@ PASS
 Java build 21+35-LTS-2513
 
 ```
-Benchmark                           Mode  Cnt     Score       Error  Units
-TestJavaDispatch.TestArrayDispatch  avgt    3  4775.994 ± 13310.309  ns/op
-TestJavaDispatch.TestDispatch       avgt    3     0.941 ±     0.088  ns/op
-TestJavaDispatch.TestIDispatch      avgt    3     1.331 ±     0.146  ns/op
-
+Benchmark                           Mode  Cnt     Score    Error  Units
+TestJavaDispatch.TestArrayDispatch  avgt    9  4367.196 ± 50.227  ns/op
+TestJavaDispatch.TestDispatch       avgt    9     0.942 ±  0.005  ns/op
+TestJavaDispatch.TestIDispatch      avgt    9     1.341 ±  0.040  ns/op
 ```
 
 **Notes**
